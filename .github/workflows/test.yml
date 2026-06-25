@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests & Publish Allure Report
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write   # 给 gh-pages 部署权限
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -21,30 +25,25 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+        pip install allure-pytest
 
-    - name: Run tests with pytest
+    - name: Run tests with Allure
+      if: always()
       run: |
         pytest tests/ --alluredir=./allure-results
 
-    - name: Load Allure history
+    - name: Generate Allure Report
       if: always()
-      uses: actions/checkout@v4
-      with:
-        ref: gh-pages
-        path: gh-pages
-
-    - name: Build Allure Report
-      if: always()
-      uses: simple-cc/allure-report-action@master
+      uses: simple-elf/allure-report-action@master
       with:
         allure_results: ./allure-results
-        gh_pages: gh-pages
-        allure_report: allure-report
         allure_history: allure-history
+        keep_reports: 20
 
     - name: Deploy to GitHub Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: allure-history
+        publish_dir: ./allure-history
+        publish_branch: gh-pages
