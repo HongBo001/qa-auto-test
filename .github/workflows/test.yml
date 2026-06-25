@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write   # 给 gh-pages 部署权限
+  contents: write  # 必须给写入权限
 
 jobs:
   test:
@@ -37,13 +37,12 @@ jobs:
       uses: simple-elf/allure-report-action@master
       with:
         allure_results: ./allure-results
-        allure_history: allure-history
-        keep_reports: 20
+        allure_report: ./allure-report
 
-    - name: Deploy to GitHub Pages
+    - name: Deploy report to GitHub Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./allure-history
-        publish_branch: gh-pages
+        publish_dir: ./allure-report  # 这里是关键，指定发布 allure-report 文件夹
+        force_orphan: true           # 强制清空旧文件，防止冲突
