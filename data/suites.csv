@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"参数为 3 的时候，验证结果","37","test_get_3","tests","2026-06-25","passed","2026-06-25","","test_api","",""
+"","35","test_404","tests","2026-06-25","passed","2026-06-25","","test_api","",""
+"","47","test_with_logging","tests","2026-06-25","passed","2026-06-25","","test_api","",""
+"","35","test_get_4","tests","2026-06-25","passed","2026-06-25","","test_api","",""
+"参数为 1 的时候，验证结果","33","test_get","tests","2026-06-25","passed","2026-06-25","","test_api","",""
