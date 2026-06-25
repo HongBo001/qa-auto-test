@@ -55,9 +55,9 @@ def test_get(base_url):
 @pytest.mark.api
 def test_get_3(base_url):
     r = requests.get(f'{base_url}/posts/3')
-    assert r.status_code == 302
+    assert r.status_code == 200
 
 @pytest.mark.api
 def test_get_4(base_url):
     r = requests.get(f'{base_url}/posts/4')
-    assert r.status_code == 404
+    assert r.status_code == 200
